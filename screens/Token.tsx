@@ -10,7 +10,7 @@ export default function Token({route, navigation}) {
 			</TouchableOpacity>
 			<Card style={{ width: '80%', shadowOpacity: 1, shadowRadius: 10, borderRadius: 24 }} marginT-40>
 				<View style={{borderRadius: 20, overflow: 'hidden'}}>
-					<Image source={item.image} style={{ width: '100%', height: 0, paddingTop: '100%'}}/>
+					<Image source={{uri: item.imageURL}} style={{ width: '100%', height: 0, paddingTop: '100%'}}/>
 				</View>
 			</Card>
 			<Text marginT-50 text30>{item.name}</Text>
