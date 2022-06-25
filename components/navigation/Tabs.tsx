@@ -1,12 +1,13 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import CustomScanButton from "./CustomScanButton"
 import TabBarIcon from "./TabBarIcon"
-import TABS from "../../constants/tabs"
+import { TABS } from "../../constants/tabs"
 
 const Tab = createBottomTabNavigator()
 
 export default function Tabs() {
 	const createTabIcon = (tab) => (props) => <TabBarIcon icon={tab.icon} name={tab.name} {...props}/>
+	
 	const tabElements = TABS.map(tab => (
 		{
 			...tab,
