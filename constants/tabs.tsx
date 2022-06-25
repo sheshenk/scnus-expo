@@ -8,8 +8,10 @@ import merchants from '../assets/icons/merchants.png'
 import tokens from '../assets/icons/tokens.png'
 import settings from '../assets/icons/settings.png'
 import scan from '../assets/icons/scan.png'
+import MerchantHome from "../screens/MerchantHome"
+import MerchantScan from "../screens/MerchantScan"
 
-const TABS = [
+export const TABS = [
 	{
 		name: "Home",
 		component: Home, 
@@ -37,4 +39,21 @@ const TABS = [
 	},
 ]
 
-export default TABS
+
+export const MERCHANT_TABS = [
+	{
+		name: "Home",
+		component: MerchantHome, 
+		icon: home
+	},
+	{
+		name: "Scan",
+		component: MerchantScan, 
+		icon: scan
+	},
+	{
+		name: "Settings",
+		component: Settings, 
+		icon: settings
+	},
+]
