@@ -3,18 +3,20 @@ import { gql } from "@apollo/client";
 export const CURRENT_TOKENS = gql`
 	query CurrentTokens {
 		readTokens {
+			_id
 			name
 			description
 			imageURL
-			_id
 			link
 		}
-		currentUser {
-			... on Customer {
-				tokens {
-					_id
-				}
-			}
+	}
+`
+
+export const ADD_TOKEN_TO_CURR_USER = gql`
+	mutation AddTokenToCurrentUser($_id: ID!) {
+		addTokenToCurrentUser(_id: $_id) {
+			response
+			error
 		}
 	}
 `
