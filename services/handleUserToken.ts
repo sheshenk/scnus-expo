@@ -1,6 +1,18 @@
-import * as SecureStore from 'expo-secure-store';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-export const saveToken = (token) => SecureStore.setItemAsync("scnus-token", token)
-// export const readToken = () => SecureStore.getItemAsync("scnus-token")
-export const readToken = async () => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmFjMTA3ZGRjNDU4OWEyZGViNDRkM2MiLCJwaG9uZSI6Ijg1MjEzMDg1IiwiX19yZXNvbHZlVHlwZSI6IkN1c3RvbWVyIiwiaWF0IjoxNjU1NDQzODA0fQ.0VrdmC9DNyQAlttuWivL_sNRISzfAJjXJxeT2GTIc9M"
-export const deleteToken = () => SecureStore.setItemAsync("scnus-token", null)
+export const saveToken = async (token) => {
+	try {
+		await AsyncStorage.setItem('scnus-token', token)
+	} catch (err) { console.log(err) }
+}
+
+export const readToken = async () =>{
+	try {
+		const value = await AsyncStorage.getItem('scnus-token')
+		return value === null ? 'null' : value
+	} catch (err) { console.log(err) }
+}
+
+export const deleteToken = async () => {
+	await saveToken('null')
+}
