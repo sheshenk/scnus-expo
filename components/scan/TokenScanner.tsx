@@ -14,7 +14,6 @@ export default function TokenScanner() {
 	const [scanned, setScanned] = useState(false)
 	const [unownedTokens, setUnownedTokens] = useState([])
 	const { data } = useQuery(CURRENT_TOKENS)
-
 	const [addTokenToCurrentUser] = useMutation(ADD_TOKEN_TO_CURR_USER, {
 		onCompleted: ({ addTokenToCurrentUser }) => {
 			const tokenId = addTokenToCurrentUser.response
@@ -39,7 +38,7 @@ export default function TokenScanner() {
 	}, [data])
 
 	useEffect(() => {
-		setUnownedTokens(unownedTokens.filter(t => !user.tokens.map(t => t._id).includes(t._id)))
+		if (unownedTokens.length > 0) setUnownedTokens(unownedTokens.filter(t => !user.tokens.map(t => t._id).includes(t._id)))
 	}, [user.tokens])
 
 	const handleBarCodeScanned = ({ data }) => {

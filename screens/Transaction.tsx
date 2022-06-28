@@ -23,7 +23,10 @@ function Transaction({ route, navigation}) {
 		},
 		onCompleted: ({ createRedemption }) => {
 			if (createRedemption.response) {
-				alert('Redeemed')
+				const disc = ((1 - discount) * parseFloat(amount))
+				setUser({ ...user, discount: user.discount + disc, discountToday: user.discountToday + disc})
+				alert('Redemption Completed!')
+				navigation.goBack()
 			} else {
 				alert('Error')
 			}
