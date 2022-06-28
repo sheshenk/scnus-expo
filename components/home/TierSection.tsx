@@ -1,5 +1,6 @@
+import { useNavigation } from "@react-navigation/native"
 import { useContext } from "react"
-import { Card, ProgressBar, Text, View } from "react-native-ui-lib"
+import { Card, ProgressBar, Text, TouchableOpacity, View } from "react-native-ui-lib"
 import COLORS from "../../constants/colors"
 import { UserContext } from "../../services/userContext"
 
@@ -27,18 +28,21 @@ const tiers = [
 ]
 
 export default function TierSection() {
-	const {user, setUser} = useContext(UserContext)
+	const {user} = useContext(UserContext)
+	const navigation = useNavigation()
 	const currentTokenCount = user ? user.tokens ? user.tokens.length : 0 : 0
-	const currentTier = tiers.filter(t => t.tokenReq < currentTokenCount || t.tokenReq === 0).reverse()[0]
+	const currentTier = tiers.filter(t => t.tokenReq <= currentTokenCount || t.tokenReq === 0).reverse()[0]
 	const nextTier = tiers.filter(t => t.tokenReq > currentTokenCount)[0]
 	return (
 		<View style={{top: currentTokenCount > 0 ? '30%' : '0%'}} margin-20>
 			<Text text60 marginB-20 color={COLORS.secondary}>Progress</Text>
-			<Card paddingH-25 paddingV-30>
-				<Text ciki text30 marginB-10 color={COLORS.secondary}>{currentTier.name}</Text>
-				<ProgressBar progress={100 * ((currentTokenCount - currentTier.tokenReq) / (nextTier.tokenReq - currentTier.tokenReq))} progressColor={COLORS.primary} style={{height: 20}}/>
-				<Text text80 marginT-20 color="gray">Collect {nextTier.tokenReq - currentTokenCount} more NFTs to reach Silver</Text>
-			</Card>
+			<TouchableOpacity activeOpacity={0.6} onPress={() => navigation.push('RewardQR', { tier: currentTier })}>
+				<Card paddingH-25 paddingV-30>
+					<Text ciki text30 marginB-10 color={COLORS.secondary}>{currentTier.name}</Text>
+					<ProgressBar progress={100 * ((currentTokenCount - currentTier.tokenReq) / (nextTier.tokenReq - currentTier.tokenReq))} progressColor={COLORS.primary} style={{height: 20}}/>
+					<Text text80 marginT-20 color="gray">Collect {nextTier.tokenReq - currentTokenCount} more NFTs to reach {nextTier.name}</Text>
+				</Card>
+			</TouchableOpacity>
 		</View>
 	)
 }

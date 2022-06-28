@@ -10,12 +10,15 @@ import { CURRENT_USER } from "../../queries/auth"
 import { Text } from "react-native-ui-lib"
 import MerchantTabs from "./MerchantTabs"
 import Transaction from "../../screens/Transaction"
+import RewardQR from "../../screens/RewardQR"
 
 export default function AppNavigationContainer() {
 	const Stack = createStackNavigator()
 	const {user, setUser} = useContext(UserContext)
 
-	const { data } = useQuery(CURRENT_USER)
+	const { data } = useQuery(CURRENT_USER, {
+		onError: (error) => console.log(error)
+	})
 
 	useEffect(() => {
 		if (data) setUser(data.currentUser)
@@ -31,7 +34,7 @@ export default function AppNavigationContainer() {
 				</Stack.Screen>
 				{
 					user && user.__typename === 'Customer' &&
-						<Stack.Screen name='App' options={{headerShown: false}}>
+						<Stack.Screen name='App' options={{headerShown: false, animationEnabled: false}}>
 							{(props) => <Tabs {...props}/>}
 						</Stack.Screen>
 				}
@@ -40,9 +43,14 @@ export default function AppNavigationContainer() {
 						{(props) => <Token {...props}/>}
 					</Stack.Screen>
 				}
+				{ user && user.__typename === 'Customer' &&
+					<Stack.Screen name='RewardQR' options={{headerShown: false}}>
+						{(props) => <RewardQR {...props}/>}
+					</Stack.Screen>
+				}
 				{
 					user && user.__typename === 'Merchant' &&
-						<Stack.Screen name='MerchantApp' options={{headerShown: false}}>
+						<Stack.Screen name='MerchantApp' options={{headerShown: false, animationEnabled: false}}>
 							{(props) => <MerchantTabs {...props}/>}
 						</Stack.Screen>
 				}
