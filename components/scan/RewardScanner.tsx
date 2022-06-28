@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { BarCodeScanner } from 'expo-barcode-scanner'
 import { Text } from "react-native-ui-lib"
-import { StyleSheet } from "react-native"
+import { Alert, StyleSheet } from "react-native"
 import { useMutation } from "@apollo/client"
 import { VERIFY_REWARD } from '../../queries/verify'
 import { useNavigation } from "@react-navigation/native"
@@ -16,8 +16,9 @@ export default function RewardScanner() {
 			if (verifyReward.response) {
 				const dets = verifyReward.response.split('-')
 				navigation.navigate('Transaction', { customerId: dets[0], discount: parseFloat(dets[1]) })
+				setScanned(false)
 			} else {
-				alert(verifyReward.error)
+				Alert.alert('Error scanning QR code', verifyReward.error, [ { text: 'OK', onPress: () => setScanned(false)}], { cancelable: false })
 			}
 		}
 	})
