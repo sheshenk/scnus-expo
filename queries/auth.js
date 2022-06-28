@@ -15,6 +15,10 @@ export const CURRENT_USER = gql`
 					link
 				}
 			}
+			... on Merchant {
+				discount
+				discountToday
+			}
 		}
 	}
 `
