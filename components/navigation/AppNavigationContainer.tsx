@@ -11,6 +11,7 @@ import { Text } from "react-native-ui-lib"
 import MerchantTabs from "./MerchantTabs"
 import Transaction from "../../screens/Transaction"
 import RewardQR from "../../screens/RewardQR"
+import Merchant from "../../screens/Merchant"
 
 export default function AppNavigationContainer() {
 	const Stack = createStackNavigator()
@@ -46,6 +47,11 @@ export default function AppNavigationContainer() {
 				{ user && user.__typename === 'Customer' &&
 					<Stack.Screen name='RewardQR' options={{headerShown: false}}>
 						{(props) => <RewardQR {...props}/>}
+					</Stack.Screen>
+				}
+				{ user && user.__typename === 'Customer' &&
+					<Stack.Screen name='Merchant' options={{headerShown: false}}>
+						{(props) => <Merchant {...props}/>}
 					</Stack.Screen>
 				}
 				{
