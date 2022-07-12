@@ -3,8 +3,8 @@ import { setContext } from '@apollo/client/link/context'
 import { readToken, saveToken } from './handleUserToken'
 import Constants from 'expo-constants'
 
-const uri = `http://${Constants.manifest.debuggerHost.split(':').shift()}:4000`;
-
+// const uri = `http://${Constants.manifest.debuggerHost.split(':').shift()}:4000`;
+const uri = 'https://scnus-server.herokuapp.com'
 // const authLink = setContext((_, { headers }) => {
 // 	return readToken().then(token => (
 // 		{
