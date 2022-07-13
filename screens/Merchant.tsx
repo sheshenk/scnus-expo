@@ -10,6 +10,12 @@ export default function Merchant({route, navigation}) {
 			</TouchableOpacity>
 			<Text marginT-50 text30>{item.name}</Text>
 			<Text marginT-20 text50 color='grey' style={{fontWeight: 'normal'}}>{item.location}</Text>
+			<Text marginT-40 text60>Terms and Conditions</Text>
+			{
+				item.terms.map((t, i) => (
+					<Text marginT-20 text70 style={{ fontSize: 20 }}>{i + 1}. {t}</Text>
+				))
+			}
 		</View>
 	)
 }
