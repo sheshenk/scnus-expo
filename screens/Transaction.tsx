@@ -19,7 +19,7 @@ function Transaction({ route, navigation}) {
 			merchantId: user._id,
 			customerId: customerId,
 			amount: parseFloat(amount),
-			discount: ((1 - discount) * parseFloat(amount))
+			discount: (1 - discount) * parseFloat(amount)
 		},
 		onCompleted: ({ createRedemption }) => {
 			if (createRedemption.response) {
