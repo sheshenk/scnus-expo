@@ -20,8 +20,8 @@ export default function TokenScanner() {
 			if (tokenId) {
 				const item = unownedTokens.find(t => t._id === tokenId)
 				setUser({...user, tokens: [item, ...user.tokens]})
-				navigation.navigate('Token', { item })
 				setScanned(false)
+				navigation.navigate('Token', { item })
 			}
 		}
 	})

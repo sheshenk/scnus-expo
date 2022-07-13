@@ -15,8 +15,8 @@ export default function RewardScanner() {
 		onCompleted: ({ verifyReward }) => {
 			if (verifyReward.response) {
 				const dets = verifyReward.response.split('-')
-				navigation.navigate('Transaction', { customerId: dets[0], discount: parseFloat(dets[1]) })
 				setScanned(false)
+				navigation.navigate('Transaction', { customerId: dets[0], discount: parseFloat(dets[1]) })
 			} else {
 				Alert.alert('Error scanning QR code', verifyReward.error, [ { text: 'OK', onPress: () => setScanned(false)}], { cancelable: false })
 			}
