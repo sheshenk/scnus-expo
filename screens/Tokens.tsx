@@ -9,21 +9,19 @@ import { UserContext } from "../services/userContext"
 
 
 export default function Tokens({navigation}) {
-	const [unownedTokens, setUnownedTokens] = useState([])
+	const [tokens, setTokens] = useState([])
 	const {user} = useContext(UserContext)
 	const {data} = useQuery(CURRENT_TOKENS)
 
 	useEffect(() => {
-		if (data && data.readTokens) {
-			setUnownedTokens(data.readTokens)
+		if (user && data && data.readTokens) {
+			var toks = [...data.readTokens.map(x => ({...x, owned: user.tokens.map(t => t._id).includes(x._id)}))]
+			toks.sort((x, y) => x.owned && !y.owned ? -1 : x.owned && y.owned ? 0 : 1)
+			setTokens(toks)
 		}
-	}, [data])
+	}, [data, user])
 
-	useEffect(() => {
-		if (unownedTokens.length > 0 && user && user.tokens) setUnownedTokens(unownedTokens.filter(t => !user.tokens.map(t => t._id).includes(t._id)))
-	}, [user.tokens])
-
-	if (!user || !user.tokens) return <></>
+	if (!user && !user.tokens) return <></>
 
 	return (
 		<View>
@@ -31,7 +29,7 @@ export default function Tokens({navigation}) {
 				<Text color='white' text30>Your Tokens</Text>
 				<Text color='white' text70>Collect tokens to unlock rewards.</Text>
 			</View>
-			<FlatList contentContainerStyle={{paddingBottom: 300}} data={[...user.tokens, ...unownedTokens]} renderItem={({item}) => (
+			<FlatList contentContainerStyle={{paddingBottom: 300}} data={tokens} renderItem={({item}) => (
 				<TokenListItem isOwned={user.tokens.map(t => t._id).includes(item._id)} item={item} onPress={() => navigation.navigate('Token', { item })}/>
 			)}/>
 		</View>
